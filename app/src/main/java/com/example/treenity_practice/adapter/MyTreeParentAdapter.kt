@@ -1,6 +1,5 @@
 package com.example.treenity_practice.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -32,6 +31,9 @@ class MyTreeParentAdapter(context: Context, treeLists: ArrayList<List<Item>>) : 
                 false
             )
         )
+//        return ParentViewHolder(
+//            LayoutInflater.from(parent.context).inflate(R.id.item_recycler, parent, false)
+//        )
     }
 
     // 데이터 개수 반환
@@ -43,6 +45,8 @@ class MyTreeParentAdapter(context: Context, treeLists: ArrayList<List<Item>>) : 
 //        items[position].let {
 //            holder.bind(it)
 //        }
+
+        holder.bind(items[position])
 
         val adapter = MyTreeAdapter(items[position])
         holder.itemView.findViewById<RecyclerView>(R.id.item_recycler).setHasFixedSize(true)
@@ -59,11 +63,11 @@ class MyTreeParentAdapter(context: Context, treeLists: ArrayList<List<Item>>) : 
 
         fun bind(item: List<Item>) {
 
+            this.recyclerView = binding.itemRecycler
+
             binding.itemRecycler.setHasFixedSize(true)
             binding.itemRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.itemRecycler.adapter = MyTreeAdapter(items[bindingAdapterPosition])
-
-            this.recyclerView = binding.itemRecycler
 
         }
     }

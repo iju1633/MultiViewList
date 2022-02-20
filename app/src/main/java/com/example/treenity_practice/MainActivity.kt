@@ -19,10 +19,6 @@ import com.example.treenity_practice.model.User
 import com.example.treenity_practice.viemodel.MyTreeViewModel
 import com.example.treenity_practice.viemodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import android.graphics.Movie
-
-
-
 
 
 @AndroidEntryPoint
@@ -45,10 +41,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var concatAdapter: ConcatAdapter
     lateinit var userAdapter: UserAdapter
 
-
     lateinit var myTreeAdapter: MyTreeAdapter
     lateinit var myTreeParentAdapter: MyTreeParentAdapter
-
 
     lateinit var messageAdapter: MessageAdapter
 
@@ -64,6 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+
         // My Tree 데이터 로드
         getMyTreeData()
 
@@ -71,11 +66,8 @@ class MainActivity : AppCompatActivity() {
         userAdapter = UserAdapter()
         messageAdapter = MessageAdapter()
 
-
         // 어댑터에 정보 주입
         initUserViewModel()
-
-
 
         // main recyclerview
         setRecyclerViews()
@@ -90,23 +82,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // 현재 카드뷰로 아이템을 구성하고 이를 나열
 
     private fun setRecyclerViews() {
+
+        // init adapter
         var item = Item("", "")
         myTreeAdapter = MyTreeAdapter(listOf(item))
         myTreeParentAdapter = MyTreeParentAdapter(this, allTreeLists)
-
+        myTreeParentAdapter.notifyDataSetChanged()
 
         val listOfAdapters = listOf(userAdapter, myTreeParentAdapter, messageAdapter)
         concatAdapter = ConcatAdapter(listOfAdapters)
 
 
         // inner rv 에 myTreeAdapter 붙이기
-        val layoutManagerForInnerRecycler: RecyclerView.LayoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.HORIZONTAL, false)
-        binding3.itemRecycler.layoutManager = layoutManagerForInnerRecycler
+        binding3.itemRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding3.itemRecycler.adapter = myTreeAdapter
+
 
         // 메인 rv 에 concatAdapter 붙이기
         val layoutManagerForMainRecycler: RecyclerView.LayoutManager = LinearLayoutManager(this,

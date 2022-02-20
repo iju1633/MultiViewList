@@ -20,13 +20,10 @@ import com.example.treenity_practice.viemodel.MyTreeViewModel
 class MyTreeAdapter(items: List<Item>) : RecyclerView.Adapter<MyTreeAdapter.MyViewHolder>() { // 지금부터 시작!!
 
 
-//    inner class MyViewHolder(val binding: TestBinding) :
-//        RecyclerView.ViewHolder(binding.root)
-
-    private val items: MutableList<CardView>
+    private val items: List<Item>
 
     init {
-        this.items = ArrayList()
+        this.items = items
     }
 
 
@@ -75,8 +72,6 @@ class MyTreeAdapter(items: List<Item>) : RecyclerView.Adapter<MyTreeAdapter.MyVi
                 crossfade(true)
                 crossfade(1000)
             }
-
-            items.add(holder.card)
         }
     }
 
