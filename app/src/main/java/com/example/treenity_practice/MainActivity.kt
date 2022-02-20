@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         // 어댑터에 정보 주입
         initUserViewModel()
 
-        // main recyclerview
         setRecyclerViews()
     }
 
