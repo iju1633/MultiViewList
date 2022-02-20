@@ -19,6 +19,10 @@ import com.example.treenity_practice.model.User
 import com.example.treenity_practice.viemodel.MyTreeViewModel
 import com.example.treenity_practice.viemodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import android.graphics.Movie
+
+
+
 
 
 @AndroidEntryPoint
@@ -48,21 +52,20 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var messageAdapter: MessageAdapter
 
+    private val allTreeLists: ArrayList<List<Item>> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding1 = ItemUserBinding.inflate(layoutInflater)
-
-
         binding3 = ItemMyitemBinding.inflate(layoutInflater)
-
-
         binding4 = ItemMessageBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
+        // My Tree 데이터 로드
+        getMyTreeData()
 
         // adapter initiate
         userAdapter = UserAdapter()
@@ -72,8 +75,19 @@ class MainActivity : AppCompatActivity() {
         // 어댑터에 정보 주입
         initUserViewModel()
 
+
+
         // main recyclerview
         setRecyclerViews()
+    }
+
+    private fun getMyTreeData() {
+        myTreeViewModel.responseMyTree.observe(this, { listMyTrees ->
+            myTreeAdapter.trees = listMyTrees
+
+            for(i: Int in listMyTrees.indices)
+                allTreeLists.add(listOf(listMyTrees[i].item))
+        })
     }
 
     // 현재 카드뷰로 아이템을 구성하고 이를 나열
@@ -81,31 +95,24 @@ class MainActivity : AppCompatActivity() {
     private fun setRecyclerViews() {
         var item = Item("", "")
         myTreeAdapter = MyTreeAdapter(listOf(item))
-        myTreeParentAdapter = MyTreeParentAdapter()
+        myTreeParentAdapter = MyTreeParentAdapter(this, allTreeLists)
 
-
-        myTreeViewModel.responseMyTree.observe(this, { listMyTrees ->
-            myTreeAdapter.trees = listMyTrees
-        })
 
         val listOfAdapters = listOf(userAdapter, myTreeParentAdapter, messageAdapter)
         concatAdapter = ConcatAdapter(listOfAdapters)
-
-
-        // 메인 rv 에 concatAdapter 붙이기
-        val layoutManagerForMainRecycler: RecyclerView.LayoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.VERTICAL, false)
-        binding.recyclerview.layoutManager = layoutManagerForMainRecycler
-        binding.recyclerview.adapter = concatAdapter
 
 
         // inner rv 에 myTreeAdapter 붙이기
         val layoutManagerForInnerRecycler: RecyclerView.LayoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
         binding3.itemRecycler.layoutManager = layoutManagerForInnerRecycler
-        binding3.itemRecycler.adapter = myTreeParentAdapter
-        
+        binding3.itemRecycler.adapter = myTreeAdapter
 
+        // 메인 rv 에 concatAdapter 붙이기
+        val layoutManagerForMainRecycler: RecyclerView.LayoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL, false)
+        binding.recyclerview.layoutManager = layoutManagerForMainRecycler
+        binding.recyclerview.adapter = concatAdapter
     }
 
     private fun initUserViewModel() {
