@@ -2,9 +2,6 @@ package net.simplifiedcoding.multiviewlist.data.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +9,7 @@ import coil.load
 import net.simplifiedcoding.multiviewlist.databinding.TestBinding
 import net.simplifiedcoding.multiviewlist.model.Item
 import net.simplifiedcoding.multiviewlist.model.MyTreeItem
+
 
 class MyTreeAdapter(items: List<Item>) : RecyclerView.Adapter<MyTreeAdapter.MyViewHolder>() { // 지금부터 시작!!
 
@@ -70,3 +68,17 @@ class MyTreeAdapter(items: List<Item>) : RecyclerView.Adapter<MyTreeAdapter.MyVi
     override fun getItemCount() = trees.size
 
 }
+
+//class MyTreeAdapter(
+//    items: List<Item> = emptyList(),
+//) : BaseAdapter<Item>(
+//    R.layout.test,
+//    items,
+//) {
+//    override fun bind(itemView: View, item: Item, position: Int, viewHolder: BaseViewHolderImp) {
+//        itemView.run {
+//            findViewById<TextView>(R.id.treeName)?.text = item.name
+//            findViewById<ImageView>(R.id.treeImage)?.load(item.imagePath)
+//        }
+//    }
+//}

@@ -1,6 +1,5 @@
 package net.simplifiedcoding.multiviewlist.data.repository
 
-
 import net.simplifiedcoding.multiviewlist.data.api.ApiService
 import javax.inject.Inject
 

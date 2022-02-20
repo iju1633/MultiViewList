@@ -66,38 +66,60 @@ class MyTreeParentAdapter(private val context: Context, private val treeLists: L
 
 }
 
-//class MyTreeParentAdapter(private val context: Context, private val treeLists: ArrayList<List<Item>>)
-//    : RecyclerView.Adapter<MyTreeParentAdapter.ParentViewHolder>() {
+//class MyTreeParentAdapter(
+//    items: List<MyTreeSection> = emptyList(),
+//) : BaseAdapter<MyTreeSection>(
+//    R.layout.item_myitem,
+//    items,
+//) {
+//    private val scrollStates: MutableMap<String, Parcelable?> = mutableMapOf()
 //
-//    private var items: ArrayList<List<Item>> = ArrayList()
+//    private val viewPool = RecyclerView.RecycledViewPool()
 //
-//    override fun onBindViewHolder(holder: ParentViewHolder, position: Int) {
-//        // 확장성을 위한 코드
-//        holder.bind(treeLists[position])
+//    private fun getSectionID(position: Int): String {
+//        return items[position].userId.toString()
 //    }
 //
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ParentViewHolder {
-//        return ParentViewHolder(
-//            ItemMyitemBinding.inflate(
-//                LayoutInflater.from(parent.context),
-//                parent,
-//                false
-//            )
-//        )
+//    override fun onViewRecycled(holder: BaseViewHolder<MyTreeSection>) {
+//        super.onViewRecycled(holder)
+//
+//        //save horizontal scroll state
+//        val key = getSectionID(holder.layoutPosition)
+////        scrollStates[key] =
+////            holder.itemView.findViewById<RecyclerView>(R.id.titledSectionRecycler).layoutManager?.onSaveInstanceState()
 //    }
 //
-//    override fun getItemCount(): Int = treeLists.size
+//    override fun bind(
+//        itemView: View,
+//        item: MyTreeSection,
+//        position: Int,
+//        viewHolder: BaseViewHolderImp
+//    ) {
+//        //itemView.findViewById<TextView>(R.id.sectionTitleTextView)?.text = item.title
+//        val layoutManager =
+//            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 //
-//    inner class ParentViewHolder(private val binding: ItemMyitemBinding) : RecyclerView.ViewHolder(binding.root) {
+//        layoutManager.initialPrefetchItemCount = 4
 //
-//        fun bind(item: List<Item>) {
-//            items. = listOf<item>()
+//        val items = ArrayList<Item>()
+//        for(i: Int in item.trees.indices) { // 모든 Tree 라는 클래스가 갖고 있는 Item 을 리스트로 저장
+//            items.add(item.trees[i].item)
+//        }
 //
-//            val adapter = MyTreeAdapter(treeLists[absoluteAdapterPosition])
-//            binding.itemRecycler.adapter = adapter
+//        val titledSectionRecycler = itemView.findViewById<RecyclerView>(R.id.item_recycler)
+//        titledSectionRecycler?.run {
+//            this.setRecycledViewPool(viewPool)
+//            this.layoutManager = layoutManager
+//            this.adapter = MyTreeAdapter(items)
+//        }
 //
-//            binding.itemRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            binding.itemRecycler.setHasFixedSize(true)
+//        //restore horizontal scroll state
+//        val key = getSectionID(viewHolder.layoutPosition)
+//        val state = scrollStates[key]
+//        if (state != null) {
+//            titledSectionRecycler.layoutManager?.onRestoreInstanceState(state)
+//        } else {
+//            titledSectionRecycler.layoutManager?.scrollToPosition(0)
 //        }
 //    }
 //}
